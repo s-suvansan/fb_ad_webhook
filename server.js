@@ -219,6 +219,16 @@ async function subscribePageToApp() {
   }
 }
 
+// Endpoint to trigger page subscription
+app.post("/setup-page-subscription", async (req, res) => {
+  try {
+    const result = await subscribePageToApp();
+    res.status(200).json({ success: true, data: result });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Function to check which apps the page has installed
 async function getPageSubscribedApps() {
   try {
@@ -241,6 +251,16 @@ async function getPageSubscribedApps() {
     throw error;
   }
 }
+
+// Endpoint to check which apps the page has installed
+app.get("/check-page-subscriptions", async (req, res) => {
+  try {
+    const result = await getPageSubscribedApps();
+    res.status(200).json({ success: true, data: result });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 async function handleLead(leadData) {
   const leadgenId = leadData.leadgen_id;
   const pageId = leadData.page_id;
