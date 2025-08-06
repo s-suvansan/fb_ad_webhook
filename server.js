@@ -126,7 +126,7 @@ app.post("/webhook", async (req, res) => {
     const data = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
     const firestoreDocId = await saveToFirestore(data, req.headers);
-    res.status(200).json({ received: true, firestoreDocId });
+    res.status(200).send("EVENT_RECEIVED");
   } catch (error) {
     console.error("❌ Error processing webhook:", error);
     res.status(500).json({ error: "Failed to process webhook" });
